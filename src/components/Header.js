@@ -22,7 +22,7 @@ function Header() {
       });
   };
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       // if user call apply first time call sign nd sign up all will store in here
       if (user) {
         const { uid, email, displayName, photoURL } = user;
@@ -44,6 +44,8 @@ function Header() {
         navigate("/");
       }
     });
+    //unsubscribe when componentto yhe onauthstatechanged callback
+    return () => unsubscribe();
   }, []);
 
   return (
