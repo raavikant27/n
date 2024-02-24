@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Login from "./Login";
 
 import Browse from "./Browse";
-import { createBrowserRouter, useNavigate } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import { RouterProvider } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -12,7 +12,7 @@ import { addUser, removeUser } from "../utils/userSlice";
 
 const Body = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // we create a routing here
   const appRouter = createBrowserRouter([
@@ -32,16 +32,23 @@ const Body = () => {
     onAuthStateChanged(auth, (user) => {
       // if user call apply first time call sign nd sign up all will store in here
       if (user) {
-        const { uid, email, displayName } = user;
+        const { uid, email, displayName, photoURL } = user;
         // put up into the store.
-        dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            photoURL: photoURL,
+          })
+        );
         // if useer will loged in i just navigate him
-       // navigate("/browse");
+        // navigate("/browse");
       } else {
         //if user sign out  then i want to dispatch another action then we call another dispatch.
         dispatch(removeUser());
         // if user sign out
-       // navigate("/browse");
+        // navigate("/browse");
       }
     });
   }, []);

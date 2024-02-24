@@ -7,6 +7,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
+import { updateProfile } from "firebase/auth";
 const Login = () => {
   const [isSignInform, setIsSignInForm] = useState(true);
   // to have the error message we create the state varible tostore the error sms
@@ -40,8 +41,21 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
-          navigate("/browse");
+          updateProfile(user, {
+            displayName: "name.current.value",
+            phtoURL: "https://avatars.githubusercontent.com/u/122196249?v=4",
+          })
+            .then(() => {
+              //Profile upadate
+              navigate("/browse");
+            })
+            .catch((error) => {
+              setErrorMessage(error.message);
+            });
+
+          // console.log(user);
+
+          // navigate("/browse");
           // ...
         })
         .catch((error) => {
