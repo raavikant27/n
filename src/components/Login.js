@@ -6,7 +6,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
+
 import { updateProfile } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
@@ -15,7 +15,7 @@ const Login = () => {
   // to have the error message we create the state varible tostore the error sms
   const [errorMessage, setErrorMessage] = useState(null);
   // it will create a refrence so that we use useref a feild over here.
-  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   const name = useRef(null);
@@ -60,7 +60,6 @@ const Login = () => {
                 })
               );
               //Profile upadate
-              navigate("/browse");
             })
             .catch((error) => {
               setErrorMessage(error.message);
@@ -88,8 +87,7 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
-          navigate("/browse");
+
           // ...
         })
         .catch((error) => {

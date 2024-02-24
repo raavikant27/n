@@ -4,14 +4,9 @@ import Login from "./Login";
 import Browse from "./Browse";
 import { createBrowserRouter } from "react-router-dom";
 import { RouterProvider } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
-
-import { auth } from "../utils/firebase";
-import { useDispatch } from "react-redux";
-import { addUser, removeUser } from "../utils/userSlice";
 
 const Body = () => {
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
   // const navigate = useNavigate();
 
   // we create a routing here
@@ -28,30 +23,6 @@ const Body = () => {
 
   // caal the api// for
   // why we use useeffect beacuse i want to stepup only ones time.
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      // if user call apply first time call sign nd sign up all will store in here
-      if (user) {
-        const { uid, email, displayName, photoURL } = user;
-        // put up into the store.
-        dispatch(
-          addUser({
-            uid: uid,
-            email: email,
-            displayName: displayName,
-            photoURL: photoURL,
-          })
-        );
-        // if useer will loged in i just navigate him
-        // navigate("/browse");
-      } else {
-        //if user sign out  then i want to dispatch another action then we call another dispatch.
-        dispatch(removeUser());
-        // if user sign out
-        // navigate("/browse");
-      }
-    });
-  }, []);
 
   return (
     <div>
