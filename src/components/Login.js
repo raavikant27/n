@@ -8,12 +8,15 @@ import {
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { updateProfile } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 const Login = () => {
   const [isSignInform, setIsSignInForm] = useState(true);
   // to have the error message we create the state varible tostore the error sms
   const [errorMessage, setErrorMessage] = useState(null);
   // it will create a refrence so that we use useref a feild over here.
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const name = useRef(null);
   const email = useRef(null);
@@ -46,6 +49,16 @@ const Login = () => {
             phtoURL: "https://avatars.githubusercontent.com/u/122196249?v=4",
           })
             .then(() => {
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              // put up into the store.
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
               //Profile upadate
               navigate("/browse");
             })
