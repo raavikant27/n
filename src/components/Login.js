@@ -10,6 +10,7 @@ import { auth } from "../utils/firebase";
 import { updateProfile } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { USER_AVTAR } from "../utils/constant";
 const Login = () => {
   const [isSignInform, setIsSignInForm] = useState(true);
   // to have the error message we create the state varible tostore the error sms
@@ -45,8 +46,8 @@ const Login = () => {
           // Signed in
           const user = userCredential.user;
           updateProfile(user, {
-            displayName: "name.current.value",
-            phtoURL: "https://avatars.githubusercontent.com/u/122196249?v=4",
+            displayName: name.current.value,
+            phtoURL: USER_AVTAR,
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = auth.currentUser;
